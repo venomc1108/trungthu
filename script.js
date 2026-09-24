@@ -1,7 +1,13 @@
-
+/* =========================================================
+   ĐÊM HỘI TRUNG THU — 44 ĐÈN LỒNG LỚP 10A6
+   Tối ưu mượt + grid tự động theo màn hình
+   ========================================================= */
 (function () {
   'use strict';
 
+  /* =======================================================
+     0. XỬ LÝ XOAY NGANG TRÊN MOBILE
+     ======================================================= */
   (function tryLockLandscape() {
     function lockLandscape() {
       const el = document.documentElement;
@@ -18,6 +24,7 @@
         }
       }
     }
+
     const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
                     || (window.matchMedia('(max-width: 900px)').matches && 'ontouchstart' in window);
 
@@ -29,12 +36,9 @@
       };
       document.addEventListener('touchstart', unlockOnce, { once: true, passive: true });
       document.addEventListener('click', unlockOnce, { once: true });
-
-      // Thử lock luôn (nếu browser cho phép)
       lockLandscape();
     }
 
-    // Khi xoay màn hình, resize lại canvas
     window.addEventListener('orientationchange', function () {
       setTimeout(function () {
         window.dispatchEvent(new Event('resize'));
@@ -42,7 +46,7 @@
     });
   })();
 
-  const PEOPLE = [
+ const PEOPLE = [
     { name: "Hoàng Nhật Anh",       message: "Chúc tổ trưởng tổ 1 trung thu sớm quên đi ng đó và tập trung vào việc học nha👀" },
     { name: "Hoàng Phương Anh",     message: "Chúc phanh trung thu vui vẻ, và học tập tiếp thu nhanh he." },
     { name: "Trần Hoàng Bách",      message: "Chúc bách Trung Thu rộn ràng, học tập tiến bộ, đạt nhiều thành tích cao❤️‍🔥." },
@@ -94,11 +98,14 @@
     "anh2.jpg"
   ];
 
+  /* =======================================================
+     2. CANVAS SAO + PHÁO HOA (tối ưu, không shadow)
+     ======================================================= */
   const canvas = document.getElementById('starCanvas');
   const ctx = canvas.getContext('2d');
   let W, H;
   let stars = [];
-  const STAR_COUNT = 90;         
+  const STAR_COUNT = 70;
   let fireworks = [];
 
   function resizeCanvas() {
@@ -120,6 +127,7 @@
       });
     }
   }
+
   function drawStars(t) {
     for (let i = 0; i < stars.length; i++) {
       const s = stars[i];
@@ -179,25 +187,47 @@
   resizeCanvas();
   requestAnimationFrame(animate);
 
+  document.body.addEventListener('click', function (e) {
+    if (e.target.closest('.modal-card') ||
+        e.target.closest('.music-btn') ||
+        e.target.closest('.lantern-wrap') ||
+        e.target.closest('.rotate-overlay')) return;
+    createFirework(e.clientX, e.clientY);
+  });
+
   /* =======================================================
-     3. ĐÈN LỒNG — GRID 9×5, CÁCH XA NHAU
+     3. ĐÈN LỒNG — GRID TỰ ĐỘNG THEO MÀN HÌNH
      ======================================================= */
   const field = document.getElementById('lanternField');
 
-  const COLS = 9;
-  const ROWS = 5;
-  const TOTAL = COLS * ROWS; // 45
+  const TOTAL = 45; 
 
-  // Vùng đèn: 4% → 96% (ngang), 30% → 96% (dọc) — chừa trên cho tiêu đề
-  const AREA_LEFT = 4;
-  const AREA_TOP  = 30;
-  const AREA_W    = 92;
-  const AREA_H    = 66;
+  /* Cấu hình grid theo màn hình — mobile dọc dùng ít cột để ô rộng */
+  function getGridConfig() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const isLandscape = w > h;
 
-  function buildGridOrder() {
+    if (w <= 500 && !isLandscape) {
+      // Mobile dọc: 5 cột × 9 hàng — ô rất rộng, tên không đè
+      return { cols: 5, rows: 9, areaTop: 22, areaH: 76 };
+    }
+    if (w <= 900) {
+      // Mobile ngang / tablet nhỏ
+      return { cols: 8, rows: 6, areaTop: 26, areaH: 72 };
+    }
+    // Desktop
+    return { cols: 9, rows: 5, areaTop: 30, areaH: 66 };
+  }
+
+  let GRID_CONFIG = getGridConfig();
+  let COLS = GRID_CONFIG.cols;
+  let ROWS = GRID_CONFIG.rows;
+
+  function buildGridOrder(cols, rows) {
     const cells = [];
-    for (let r = 0; r < ROWS; r++) {
-      for (let c = 0; c < COLS; c++) {
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
         cells.push({ col: c, row: r });
       }
     }
@@ -208,7 +238,7 @@
     return cells;
   }
 
-  const GRID = buildGridOrder();
+  let GRID = buildGridOrder(COLS, ROWS);
 
   function buildChineseLanternSVG(type) {
     const red = '#d40000';
@@ -297,27 +327,32 @@
     </svg>`;
   }
 
+  /* Render 1 đèn trong ô (cell) — tự vừa khít ô, không đè */
   function createLantern(index, cell) {
     const person = PEOPLE[index % PEOPLE.length];
     const types = ['oval', 'oval', 'star', 'oval', 'round'];
     const type = types[index % types.length];
 
+    const cfg = GRID_CONFIG;
+    const AREA_LEFT = 4;
+    const AREA_W = 92;
+    const AREA_TOP = cfg.areaTop;
+    const AREA_H = cfg.areaH;
+
     const cellW = AREA_W / COLS;
     const cellH = AREA_H / ROWS;
 
-    // Jitter CỰC NHỎ (chỉ 10% ô) để đèn KHÔNG chồng lên nhau
-    const padX = cellW * 0.35;
-    const padY = cellH * 0.35;
-    const offsetX = padX + Math.random() * (cellW - padX * 2);
-    const offsetY = padY + Math.random() * (cellH - padY * 2);
+    // Căn giữa ô (jitter = 0 để chắc chắn không đè)
+    const offsetX = cellW * 0.5;
+    const offsetY = cellH * 0.5;
 
     const leftPct = AREA_LEFT + cell.col * cellW + offsetX;
     const topPct  = AREA_TOP  + cell.row * cellH + offsetY;
 
-    // Đèn chiếm tối đa 70% ô để chừa khoảng cách
-    const sizeByW = (cellW / 100) * window.innerWidth  * 0.65;
-    const sizeByH = (cellH / 100) * window.innerHeight * 0.65;
-    const size = Math.max(26, Math.min(sizeByW, sizeByH, 60));
+    // Đèn chiếm tối đa 55% ô
+    const sizeByW = (cellW / 100) * window.innerWidth  * 0.55;
+    const sizeByH = (cellH / 100) * window.innerHeight * 0.55;
+    const size = Math.max(24, Math.min(sizeByW, sizeByH, 55));
 
     const dur = 3 + Math.random() * 3;
 
@@ -329,12 +364,14 @@
     wrap.style.height = (size * 1.5) + 'px';
     wrap.style.animationDuration = dur + 's';
     wrap.style.animationDelay = (-Math.random() * dur) + 's';
+    wrap.style.willChange = 'transform';
 
     wrap.innerHTML = buildChineseLanternSVG(type);
 
     const nameEl = document.createElement('div');
     nameEl.className = 'lantern-name';
     nameEl.textContent = person.name;
+    nameEl.title = person.name; // tooltip khi hover
     wrap.appendChild(nameEl);
 
     wrap.addEventListener('click', function (e) {
@@ -347,9 +384,30 @@
     field.appendChild(wrap);
   }
 
-  for (let i = 0; i < TOTAL; i++) {
-    createLantern(i, GRID[i]);
+  function renderLanterns() {
+    field.innerHTML = '';
+    for (let i = 0; i < TOTAL; i++) {
+      createLantern(i, GRID[i % GRID.length]);
+    }
   }
+
+  renderLanterns();
+
+  /* Khi resize / xoay màn hình → đổi grid + render lại */
+  let resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      const newCfg = getGridConfig();
+      if (newCfg.cols !== COLS || newCfg.rows !== ROWS) {
+        GRID_CONFIG = newCfg;
+        COLS = newCfg.cols;
+        ROWS = newCfg.rows;
+        GRID = buildGridOrder(COLS, ROWS);
+        renderLanterns();
+      }
+    }, 250);
+  });
 
   /* =======================================================
      4. MODAL
@@ -363,8 +421,13 @@
   function openModal(person, index) {
     modalTitle.textContent = person.name;
     modalPoem.textContent  = '“' + person.message + '”';
-    modalImg.src = IMAGES[index % IMAGES.length];
-    modalImg.alt = person.name;
+    if (IMAGES.length > 0) {
+      modalImg.src = IMAGES[index % IMAGES.length];
+      modalImg.alt = person.name;
+      modalImg.style.display = 'block';
+    } else {
+      modalImg.style.display = 'none';
+    }
     overlay.classList.add('active');
   }
 
