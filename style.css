@@ -12,70 +12,79 @@
 html, body {
   width: 100%;
   height: 100%;
+  height: 100dvh;
   overflow: hidden;
   background: radial-gradient(ellipse at 50% 0%, #0d1230 0%, #0a0d24 40%, #05060f 100%);
   font-family: 'Be Vietnam Pro', sans-serif;
   color: #fff;
   position: fixed;
   inset: 0;
+  overscroll-behavior: none;
 }
 
 ::-webkit-scrollbar { display: none; }
 
 /* =========================================================
-   CANVAS — LUÔN FULL MÀN HÌNH THỰC, KHÔNG XOAY
+   CANVAS — FULL MÀN HÌNH THỰC, KHÔNG XOAY
    ========================================================= */
 #starCanvas {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: 1;
   pointer-events: none;
+  display: block;
 }
 
 /* =========================================================
-   APP STAGE
-   - Mặc định: full màn hình, không xoay
-   - Trên mobile dọc: JS thêm class `force-landscape` → xoay 90°
+   APP STAGE — Tự xoay 90° trên mobile dọc
+   Dùng dvh/dvw để luôn full màn hình kể cả webview Messenger
    ========================================================= */
 .app-stage {
   position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   transform-origin: center center;
   transform: none;
   z-index: 5;
-  /* transition chỉ áp dụng sau khi trang load xong để tránh giật */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 body.ready .app-stage {
-  transition: transform 0.4s ease;
+  transition: transform 0.4s ease, width 0.4s ease, height 0.4s ease;
 }
 
-/* Mobile dọc → xoay 90° để trông như khung ngang */
+/* Mobile DỌC → xoay 90° để thành khung ngang */
 body.force-landscape .app-stage {
   width: 100vh;
   height: 100vw;
+  width: 100dvh;
+  height: 100dvw;
   top: 50%;
   left: 50%;
   right: auto;
   bottom: auto;
-  inset: auto;
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
-/* Mobile ngang → không xoay */
+/* Mobile NGANG → hiện thẳng */
 body.force-landscape.landscape-real .app-stage {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  inset: 0;
   transform: none;
 }
 
@@ -154,7 +163,7 @@ body.force-landscape.landscape-real .app-stage {
 }
 
 /* =========================================================
-   HERO
+   HERO — TIÊU ĐỀ
    ========================================================= */
 .hero {
   position: absolute;
@@ -201,7 +210,7 @@ body.force-landscape.landscape-real .app-stage {
 }
 
 /* =========================================================
-   CHÚ CUỘI
+   CHÚ CUỘI — GÓC TRÊN PHẢI
    ========================================================= */
 .cuoi-corner {
   position: absolute;
