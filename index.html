@@ -3,13 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="screen-orientation" content="landscape">
-<meta name="x5-orientation" content="landscape">
-<meta name="full-screen" content="yes">
-<meta name="x5-fullscreen" content="true">
-<meta name="browsermode" content="application">
-<meta name="x5-page-mode" content="app">
-<title>Đêm Hội Trung Thu · 45 Lời Chúc</title>
+<title>Đêm Hội Trung Thu · 10A6</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,148 +13,149 @@
 </head>
 <body>
 
-  <!-- Lớp phủ yêu cầu xoay ngang (chỉ hiện trên mobile portrait) -->
-  <div class="rotate-overlay" id="rotateOverlay">
-    <div class="rotate-icon">📱</div>
-    <div class="rotate-text">Vui lòng xoay ngang điện thoại</div>
-    <div class="rotate-sub">để xem đêm hội Trung Thu trọn vẹn</div>
-  </div>
-
-  <div class="shader-layer"></div>
-
+  <!-- Canvas sao: NẰM NGOÀI .app-stage — luôn full màn hình thực -->
   <canvas id="starCanvas"></canvas>
 
-  <!-- Mặt trăng + mây -->
-  <div class="moon-glow"></div>
-  <div class="moon"></div>
-  <div class="cloud cloud1"></div>
-  <div class="cloud cloud2"></div>
-  <div class="cloud cloud3"></div>
+  <!-- Khung app: sẽ tự xoay 90° khi mobile dọc -->
+  <div class="app-stage" id="appStage">
 
-  <!-- TIÊU ĐỀ -->
-  <div class="hero">
-    <h1 class="title">Chúc Mừng Tết Trung Thu</h1>
-    <div class="subtitle">✦ 45 Ngọn Đèn · 45 Lời Chúc ✦</div>
-  </div>
+    <div class="shader-layer"></div>
 
-  <!-- CHÚ CUỘI GÓC TRÊN PHẢI -->
-  <div class="cuoi-corner">
-    <svg class="cuoi" viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="cuoiHalo" cx="50%" cy="40%" r="60%">
-          <stop offset="0%"  stop-color="#fff3c9" stop-opacity="0.85"/>
-          <stop offset="60%" stop-color="#ffd966" stop-opacity="0.25"/>
-          <stop offset="100%" stop-color="#ffd966" stop-opacity="0"/>
-        </radialGradient>
-        <linearGradient id="cuoiTree" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stop-color="#5fa04a"/>
-          <stop offset="100%" stop-color="#2b4d24"/>
-        </linearGradient>
-        <linearGradient id="cuoiTrunk" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stop-color="#8b6b3d"/>
-          <stop offset="100%" stop-color="#4a3520"/>
-        </linearGradient>
-        <linearGradient id="cuoiShirt" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stop-color="#f2e0b8"/>
-          <stop offset="100%" stop-color="#b98a4c"/>
-        </linearGradient>
-        <linearGradient id="cuoiPants" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stop-color="#5a3a1e"/>
-          <stop offset="100%" stop-color="#2b1a0d"/>
-        </linearGradient>
-      </defs>
+    <!-- Mặt trăng + mây -->
+    <div class="moon-glow"></div>
+    <div class="moon"></div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
 
-      <circle cx="110" cy="140" r="115" fill="url(#cuoiHalo)"/>
+    <!-- Tiêu đề -->
+    <div class="hero">
+      <h1 class="title">Chúc Mừng Tết Trung Thu</h1>
+      <div class="subtitle">✦ 45 Ngọn Đèn · 45 Lời Chúc ✦</div>
+    </div>
 
-      <path d="M180 300 L188 180 Q190 150 175 140 Q165 138 158 150 Q155 165 165 175 L158 300 Z" fill="url(#cuoiTrunk)"/>
-      <ellipse cx="178" cy="110" rx="52" ry="34" fill="url(#cuoiTree)"/>
-      <ellipse cx="140" cy="95"  rx="36" ry="24" fill="url(#cuoiTree)"/>
-      <ellipse cx="205" cy="130" rx="30" ry="20" fill="url(#cuoiTree)"/>
-      <ellipse cx="160" cy="130" rx="30" ry="20" fill="url(#cuoiTree)"/>
+    <!-- Chú Cuội góc trên phải -->
+    <div class="cuoi-corner">
+      <svg class="cuoi" viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="cuoiHalo" cx="50%" cy="40%" r="60%">
+            <stop offset="0%"  stop-color="#fff3c9" stop-opacity="0.85"/>
+            <stop offset="60%" stop-color="#ffd966" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#ffd966" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="cuoiTree" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#5fa04a"/>
+            <stop offset="100%" stop-color="#2b4d24"/>
+          </linearGradient>
+          <linearGradient id="cuoiTrunk" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#8b6b3d"/>
+            <stop offset="100%" stop-color="#4a3520"/>
+          </linearGradient>
+          <linearGradient id="cuoiShirt" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#f2e0b8"/>
+            <stop offset="100%" stop-color="#b98a4c"/>
+          </linearGradient>
+          <linearGradient id="cuoiPants" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#5a3a1e"/>
+            <stop offset="100%" stop-color="#2b1a0d"/>
+          </linearGradient>
+        </defs>
 
-      <path d="M55 265 Q75 258 92 268 L92 285 Q72 292 55 285 Z" fill="url(#cuoiPants)"/>
-      <ellipse cx="60" cy="288" rx="18" ry="7" fill="#2b1a0d"/>
-      <ellipse cx="90" cy="288" rx="14" ry="6" fill="#2b1a0d"/>
+        <circle cx="110" cy="140" r="115" fill="url(#cuoiHalo)"/>
 
-      <path d="M58 230 Q80 220 100 232 L100 270 Q80 278 55 268 Z" fill="url(#cuoiPants)"/>
+        <path d="M180 300 L188 180 Q190 150 175 140 Q165 138 158 150 Q155 165 165 175 L158 300 Z" fill="url(#cuoiTrunk)"/>
+        <ellipse cx="178" cy="110" rx="52" ry="34" fill="url(#cuoiTree)"/>
+        <ellipse cx="140" cy="95"  rx="36" ry="24" fill="url(#cuoiTree)"/>
+        <ellipse cx="205" cy="130" rx="30" ry="20" fill="url(#cuoiTree)"/>
+        <ellipse cx="160" cy="130" rx="30" ry="20" fill="url(#cuoiTree)"/>
 
-      <path d="M52 170 Q80 155 118 168 L128 235 Q95 248 55 238 Z" fill="url(#cuoiShirt)"/>
-      <path d="M70 168 L88 190 L108 168 Q88 162 70 168 Z" fill="#f7ecd0"/>
-      <path d="M56 220 Q88 214 126 220 L126 230 Q88 224 56 230 Z" fill="#8b5a2b"/>
-      <circle cx="88" cy="195" r="2" fill="#8b5a2b"/>
-      <circle cx="88" cy="208" r="2" fill="#8b5a2b"/>
+        <path d="M55 265 Q75 258 92 268 L92 285 Q72 292 55 285 Z" fill="url(#cuoiPants)"/>
+        <ellipse cx="60" cy="288" rx="18" ry="7" fill="#2b1a0d"/>
+        <ellipse cx="90" cy="288" rx="14" ry="6" fill="#2b1a0d"/>
 
-      <path d="M118 178 Q140 190 142 215 Q130 218 122 205 Z" fill="url(#cuoiShirt)"/>
-      <ellipse cx="143" cy="218" rx="7" ry="6" fill="#ffe4c4"/>
+        <path d="M58 230 Q80 220 100 232 L100 270 Q80 278 55 268 Z" fill="url(#cuoiPants)"/>
 
-      <path d="M52 185 Q28 205 32 235 Q45 232 50 215 Z" fill="url(#cuoiShirt)"/>
-      <ellipse cx="33" cy="238" rx="7" ry="6" fill="#ffe4c4"/>
+        <path d="M52 170 Q80 155 118 168 L128 235 Q95 248 55 238 Z" fill="url(#cuoiShirt)"/>
+        <path d="M70 168 L88 190 L108 168 Q88 162 70 168 Z" fill="#f7ecd0"/>
+        <path d="M56 220 Q88 214 126 220 L126 230 Q88 224 56 230 Z" fill="#8b5a2b"/>
+        <circle cx="88" cy="195" r="2" fill="#8b5a2b"/>
+        <circle cx="88" cy="208" r="2" fill="#8b5a2b"/>
 
-      <line x1="30" y1="235" x2="48" y2="155" stroke="#6b4a26" stroke-width="4" stroke-linecap="round"/>
-      <circle cx="48" cy="152" r="4" fill="#8b6b3d"/>
+        <path d="M118 178 Q140 190 142 215 Q130 218 122 205 Z" fill="url(#cuoiShirt)"/>
+        <ellipse cx="143" cy="218" rx="7" ry="6" fill="#ffe4c4"/>
 
-      <path d="M80 155 Q88 162 96 155 L96 172 Q88 176 80 172 Z" fill="#ffe4c4"/>
+        <path d="M52 185 Q28 205 32 235 Q45 232 50 215 Z" fill="url(#cuoiShirt)"/>
+        <ellipse cx="33" cy="238" rx="7" ry="6" fill="#ffe4c4"/>
 
-      <ellipse cx="88" cy="120" rx="26" ry="30" fill="#ffe4c4"/>
-      <ellipse cx="62" cy="120" rx="5" ry="8" fill="#ffd6b0"/>
-      <ellipse cx="114" cy="120" rx="5" ry="8" fill="#ffd6b0"/>
+        <line x1="30" y1="235" x2="48" y2="155" stroke="#6b4a26" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="48" cy="152" r="4" fill="#8b6b3d"/>
 
-      <path d="M62 100 Q68 78 88 76 Q108 78 114 100 Q108 92 88 90 Q68 92 62 100 Z" fill="#2b1a0d"/>
-      <path d="M60 98 Q88 82 116 98 L118 108 Q88 96 58 108 Z" fill="#7a4a1e"/>
-      <rect x="76" y="70" width="24" height="14" rx="3" fill="#7a4a1e"/>
-      <rect x="76" y="70" width="24" height="14" rx="3" fill="none" stroke="#3a2614" stroke-width="1"/>
-      <circle cx="88" cy="76" r="2" fill="#ffd966"/>
+        <path d="M80 155 Q88 162 96 155 L96 172 Q88 176 80 172 Z" fill="#ffe4c4"/>
 
-      <ellipse cx="78" cy="120" rx="2.4" ry="3.2" fill="#2b1a0d"/>
-      <ellipse cx="98" cy="120" rx="2.4" ry="3.2" fill="#2b1a0d"/>
-      <circle cx="78.6" cy="119" r="1" fill="#fff"/>
-      <circle cx="98.6" cy="119" r="1" fill="#fff"/>
-      <path d="M72 112 Q78 108 84 112" stroke="#2b1a0d" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-      <path d="M92 112 Q98 108 104 112" stroke="#2b1a0d" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <ellipse cx="88" cy="120" rx="26" ry="30" fill="#ffe4c4"/>
+        <ellipse cx="62" cy="120" rx="5" ry="8" fill="#ffd6b0"/>
+        <ellipse cx="114" cy="120" rx="5" ry="8" fill="#ffd6b0"/>
 
-      <path d="M87 128 Q89 132 91 128" stroke="#a06a3a" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M62 100 Q68 78 88 76 Q108 78 114 100 Q108 92 88 90 Q68 92 62 100 Z" fill="#2b1a0d"/>
+        <path d="M60 98 Q88 82 116 98 L118 108 Q88 96 58 108 Z" fill="#7a4a1e"/>
+        <rect x="76" y="70" width="24" height="14" rx="3" fill="#7a4a1e"/>
+        <rect x="76" y="70" width="24" height="14" rx="3" fill="none" stroke="#3a2614" stroke-width="1"/>
+        <circle cx="88" cy="76" r="2" fill="#ffd966"/>
 
-      <path d="M82 138 Q88 144 94 138" stroke="#8b3a3a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-      <path d="M80 144 Q78 158 82 168" stroke="#4a2f18" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-      <path d="M96 144 Q98 158 94 168" stroke="#4a2f18" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-      <path d="M80 138 Q74 140 70 144" stroke="#4a2f18" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      <path d="M96 138 Q102 140 106 144" stroke="#4a2f18" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="78" cy="120" rx="2.4" ry="3.2" fill="#2b1a0d"/>
+        <ellipse cx="98" cy="120" rx="2.4" ry="3.2" fill="#2b1a0d"/>
+        <circle cx="78.6" cy="119" r="1" fill="#fff"/>
+        <circle cx="98.6" cy="119" r="1" fill="#fff"/>
+        <path d="M72 112 Q78 108 84 112" stroke="#2b1a0d" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M92 112 Q98 108 104 112" stroke="#2b1a0d" stroke-width="1.8" fill="none" stroke-linecap="round"/>
 
-      <circle cx="72" cy="130" r="4" fill="#ffb3a0" opacity="0.6"/>
-      <circle cx="104" cy="130" r="4" fill="#ffb3a0" opacity="0.6"/>
+        <path d="M87 128 Q89 132 91 128" stroke="#a06a3a" stroke-width="1.2" fill="none" stroke-linecap="round"/>
 
-      <ellipse cx="143" cy="215" rx="9" ry="6" fill="#c98b3f"/>
-      <ellipse cx="143" cy="213" rx="9" ry="6" fill="#e6b35a"/>
-      <text x="143" y="216" text-anchor="middle"
-            font-family="serif" font-size="6" fill="#5b2a10">福</text>
-    </svg>
-  </div>
+        <path d="M82 138 Q88 144 94 138" stroke="#8b3a3a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path d="M80 144 Q78 158 82 168" stroke="#4a2f18" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M96 144 Q98 158 94 168" stroke="#4a2f18" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M80 138 Q74 140 70 144" stroke="#4a2f18" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M96 138 Q102 140 106 144" stroke="#4a2f18" stroke-width="1.2" fill="none" stroke-linecap="round"/>
 
-  <!-- Nơi render đèn lồng -->
-  <div id="lanternField"></div>
+        <circle cx="72" cy="130" r="4" fill="#ffb3a0" opacity="0.6"/>
+        <circle cx="104" cy="130" r="4" fill="#ffb3a0" opacity="0.6"/>
 
-  <!-- Nút nhạc -->
-  <button class="music-btn" id="musicBtn" aria-label="Bật tắt nhạc">🎵</button>
+        <ellipse cx="143" cy="215" rx="9" ry="6" fill="#c98b3f"/>
+        <ellipse cx="143" cy="213" rx="9" ry="6" fill="#e6b35a"/>
+        <text x="143" y="216" text-anchor="middle"
+              font-family="serif" font-size="6" fill="#5b2a10">福</text>
+      </svg>
+    </div>
+
+    <!-- Nơi render đèn lồng -->
+    <div id="lanternField"></div>
+
+    <!-- Nút nhạc -->
+    <button class="music-btn" id="musicBtn" aria-label="Bật tắt nhạc">🎵</button>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
+      <div class="modal-card" id="modalCard">
+        <button class="modal-close" id="modalClose" aria-label="Đóng">✕</button>
+        <div class="modal-title" id="modalTitle">Gửi cậu</div>
+        <div class="modal-image">
+          <img id="modalImg" src="" alt="Trung Thu">
+          <div class="modal-image-shine"></div>
+        </div>
+        <div class="modal-poem" id="modalPoem"></div>
+        <div class="modal-footer">
+          <span class="dots">✦</span> TRUNG THU AN LÀNH <span class="dots">✦</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.app-stage -->
+
+  <!-- Nhạc để NGOÀI stage để Safari không lỗi khi xoay -->
   <audio id="bgMusic" loop preload="auto">
     <source src="aa.mp3" type="audio/mpeg">
     Trình duyệt không hỗ trợ phát nhạc.
   </audio>
-
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
-    <div class="modal-card" id="modalCard">
-      <button class="modal-close" id="modalClose" aria-label="Đóng">✕</button>
-      <div class="modal-title" id="modalTitle">Gửi cậu</div>
-      <div class="modal-image">
-        <img id="modalImg" src="" alt="Trung Thu">
-        <div class="modal-image-shine"></div>
-      </div>
-      <div class="modal-poem" id="modalPoem"></div>
-      <div class="modal-footer">
-        <span class="dots">✦</span> TRUNG THU AN LÀNH <span class="dots">✦</span>
-      </div>
-    </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
