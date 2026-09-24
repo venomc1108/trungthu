@@ -35,7 +35,9 @@ html, body {
 }
 
 /* =========================================================
-   APP STAGE — Khung sẽ tự xoay 90° trên mobile dọc
+   APP STAGE
+   - Mặc định: full màn hình, không xoay
+   - Trên mobile dọc: JS thêm class `force-landscape` → xoay 90°
    ========================================================= */
 .app-stage {
   position: fixed;
@@ -44,11 +46,16 @@ html, body {
   height: 100%;
   overflow: hidden;
   transform-origin: center center;
-  transition: transform 0.35s ease;
+  transform: none;
   z-index: 5;
+  /* transition chỉ áp dụng sau khi trang load xong để tránh giật */
 }
 
-/* Khi mobile dọc: ép stage thành khung ngang bằng cách xoay 90° */
+body.ready .app-stage {
+  transition: transform 0.4s ease;
+}
+
+/* Mobile dọc → xoay 90° để trông như khung ngang */
 body.force-landscape .app-stage {
   width: 100vh;
   height: 100vw;
@@ -60,18 +67,16 @@ body.force-landscape .app-stage {
   transform: translate(-50%, -50%) rotate(90deg);
 }
 
-/* Nếu user xoay máy thật sang ngang → bỏ xoay */
-@media (orientation: landscape) {
-  body.force-landscape .app-stage {
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    inset: 0;
-    transform: none;
-  }
+/* Mobile ngang → không xoay */
+body.force-landscape.landscape-real .app-stage {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  inset: 0;
+  transform: none;
 }
 
 /* =========================================================
@@ -149,7 +154,7 @@ body.force-landscape .app-stage {
 }
 
 /* =========================================================
-   HERO — TIÊU ĐỀ
+   HERO
    ========================================================= */
 .hero {
   position: absolute;
@@ -196,7 +201,7 @@ body.force-landscape .app-stage {
 }
 
 /* =========================================================
-   CHÚ CUỘI — GÓC TRÊN PHẢI
+   CHÚ CUỘI
    ========================================================= */
 .cuoi-corner {
   position: absolute;
@@ -238,9 +243,7 @@ body.force-landscape .app-stage {
   will-change: transform;
   transform-origin: center top;
 }
-.lantern-wrap:hover {
-  z-index: 50;
-}
+.lantern-wrap:hover { z-index: 50; }
 .lantern-wrap:hover .lantern-svg {
   filter: brightness(1.4) drop-shadow(0 0 12px #ffcc33);
 }
@@ -433,7 +436,7 @@ body.force-landscape .app-stage {
 .music-btn:active { transform: scale(0.94); }
 
 /* =========================================================
-   RESPONSIVE — chữ nhỏ hơn trên mobile
+   RESPONSIVE
    ========================================================= */
 @media (max-width: 900px) {
   .lantern-name {

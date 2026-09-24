@@ -1,41 +1,57 @@
 /* =========================================================
    ĐÊM HỘI TRUNG THU — 45 ĐÈN LỒNG LỚP 10A6
-   Tự xoay khung trên mobile dọc (giả lập landscape)
+   Tự xoay ngang trên mọi điện thoại (không cần user làm gì)
    ========================================================= */
 (function () {
   'use strict';
 
   /* =======================================================
-     0. GIẢ LẬP KHUNG NGANG TRÊN MOBILE DỌC
+     0. TỰ ĐỘNG XOAY NGANG TRÊN MOBILE
+     - Phát hiện mobile
+     - Nếu màn hình đang DỌC → xoay stage 90° (qua CSS class)
+     - Nếu màn hình đang NGANG → không xoay
      ======================================================= */
-  (function forceLandscapeOnMobile() {
-    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
-                    || ('ontouchstart' in window && window.matchMedia('(max-width: 900px)').matches);
-    if (!isMobile) return;
+  (function autoLandscapeOnMobile() {
+    const ua = navigator.userAgent || '';
+    const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+    const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    const isNarrow = Math.min(window.screen.width, window.screen.height) <= 900;
+    const isMobile = isMobileUA || (hasTouch && isNarrow);
 
     const body = document.body;
 
     function applyOrientation() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      if (!isMobile) {
+        body.classList.remove('force-landscape', 'landscape-real');
+        return;
+      }
+
+      const w = (window.visualViewport ? window.visualViewport.width  : window.innerWidth);
+      const h = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
       const isPortrait = h > w;
 
       if (isPortrait) {
         body.classList.add('force-landscape');
+        body.classList.remove('landscape-real');
       } else {
-        body.classList.remove('force-landscape');
+        body.classList.add('force-landscape');
+        body.classList.add('landscape-real');
       }
-
-      // Sau khi xoay → resize lại canvas + grid
-      setTimeout(function () {
-        window.dispatchEvent(new Event('resize'));
-      }, 380);
     }
 
     applyOrientation();
+
     window.addEventListener('resize', applyOrientation);
     window.addEventListener('orientationchange', function () {
-      setTimeout(applyOrientation, 250);
+      setTimeout(applyOrientation, 200);
+    });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', applyOrientation);
+    }
+    window.addEventListener('load', function () {
+      setTimeout(applyOrientation, 100);
+      // Bật transition sau khi trang đã ổn định để tránh giật
+      document.body.classList.add('ready');
     });
   })();
 
@@ -62,7 +78,7 @@
     { name: "Lê Quốc Bảo Khanh",      message: "Chúc Khanh Trung Thu an khang, sự nghiệp học tập ngày càng rạng rỡ nha~~ 💞❤️‍🔥👹." },
     { name: "Nguyễn Đình Anh Khôi",   message: "Chúc tk e Khôi một mùa Trung Thu trọn vẹn, luôn tỏa sáng trong tập thể💞☃️." },
     { name: "Đặng Thị Thùy Linh",     message: "Chúc Linh Trung Thu vv học giỏi và luôn có những thành tích trong học tập💞❤️‍🔥." },
-    { name: "Nguyễn Đình Tấn Lộc",    message: "Chúc lớp phó lao đôn Trung Thu vui vẻ, tài lộc đầy nhà, học hành tấn tới và lao động cho mik xin vc nhẹ:) 😞."},
+    { name: "Nguyễn Đình Tấn Lộc",    message: "Chúc lớp phó lao đôn Trung Thu vui vẻ, tài lộc đầy nhà, học hành tấn tới và lao động cho mik xin vc nhẹ:) 😞." },
     { name: "Phan Thị Xuân Mai",      message: "Chúc Xuân Mai một đêm Trung Thu siêu vv, luôn xinh đẹp như cj hằng, dịu dàng và luôn có những thành tích tuyệt vời trong học tập💞💗💝 ." },
     { name: "Nguyễn Bảo Nam",         message: "Chúc bạn Trung Thu ấm áp bên gia đình, học tập tiến bộ vượt bậc." },
     { name: "Nguyễn Thị Hoàng Ngân",  message: "Chúc Ngân một mùa Trung Thu an lành, gặp nhiều điều tốt đẹp và học bớt cười lại để tập trung học💞⁉️🥶☃️." },
@@ -206,15 +222,8 @@
   }
 
   function getGridConfig() {
-    const s = getStageSize();
-    const shortSide = Math.min(s.w, s.h);
-
-    if (shortSide <= 500) {
-      // Mobile (đã xoay ngang giả lập)
-      return { cols: 9, rows: 5, areaTop: 24, areaH: 72 };
-    }
-    // Desktop / tablet
-    return { cols: 9, rows: 5, areaTop: 30, areaH: 66 };
+    // Sau khi stage xoay, rect đã phản ánh kích thước hiển thị thực
+    return { cols: 9, rows: 5, areaTop: 26, areaH: 70 };
   }
 
   let GRID_CONFIG = getGridConfig();

@@ -13,28 +13,25 @@
 </head>
 <body>
 
-  <!-- Canvas sao: NẰM NGOÀI .app-stage — luôn full màn hình thực -->
+  <!-- Canvas sao: LUÔN full màn hình thực, KHÔNG xoay -->
   <canvas id="starCanvas"></canvas>
 
-  <!-- Khung app: sẽ tự xoay 90° khi mobile dọc -->
+  <!-- Khung app: sẽ tự xoay 90° khi phát hiện điện thoại đang ở chiều dọc -->
   <div class="app-stage" id="appStage">
 
     <div class="shader-layer"></div>
 
-    <!-- Mặt trăng + mây -->
     <div class="moon-glow"></div>
     <div class="moon"></div>
     <div class="cloud cloud1"></div>
     <div class="cloud cloud2"></div>
     <div class="cloud cloud3"></div>
 
-    <!-- Tiêu đề -->
     <div class="hero">
       <h1 class="title">Chúc Mừng Tết Trung Thu</h1>
       <div class="subtitle">✦ 45 Ngọn Đèn · 45 Lời Chúc ✦</div>
     </div>
 
-    <!-- Chú Cuội góc trên phải -->
     <div class="cuoi-corner">
       <svg class="cuoi" viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -127,13 +124,10 @@
       </svg>
     </div>
 
-    <!-- Nơi render đèn lồng -->
     <div id="lanternField"></div>
 
-    <!-- Nút nhạc -->
     <button class="music-btn" id="musicBtn" aria-label="Bật tắt nhạc">🎵</button>
 
-    <!-- Modal -->
     <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
       <div class="modal-card" id="modalCard">
         <button class="modal-close" id="modalClose" aria-label="Đóng">✕</button>
@@ -151,7 +145,6 @@
 
   </div><!-- /.app-stage -->
 
-  <!-- Nhạc để NGOÀI stage để Safari không lỗi khi xoay -->
   <audio id="bgMusic" loop preload="auto">
     <source src="aa.mp3" type="audio/mpeg">
     Trình duyệt không hỗ trợ phát nhạc.
