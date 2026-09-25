@@ -51,7 +51,7 @@
     { name: "Phạm Hoàng Anh Tuấn",    message: "Chúc Tuấn Trung Thu vv, sự nghiệp học tập ngày càng rạng rỡ🐧🏳️‍🌈." },
     { name: "Nguyễn Bá Tuấn Vĩ",      message: "Chúc tk e Vĩ một mùa Trung Thu trọn vẹn, học hành tấn tới, gặp nhiều may mắn và bớt nch." },
     { name: "Nguyễn Hà Đức Vinh",     message: "Chúc tk em Vinh Trung Thu vui vẻ, học tập suôn sẻ và bớt dien lại:) 😞⁉️." },
-    { name: "Nguyễn Thị Hải Yến",     message: "Chúc Yến Trung Thu vv, luôn học là siêu học bá. 👀" },
+    { name: "Nguyễn Thị Hải Yến",     message: "Chúc Yến Trung Thu vv, luôn học là siêu học bá.👀" },
     { name: "Phạm Tiến Đạt",          message: "Chúc tk em Đạt Trung Thu ấm áp, học tập tiến bộ và ăn mau chóng lớn-) 🥶🐧." },
     { name: "Cô Oanh",                message: "Chúc Cô Trung Thu vv, ấm áp bên gia đình và chúc cô luôn thành công trong sự nghiệp trồng người của mình, và chúng em cũng mong ước cô sẽ đồng hành cùng chúng em hết 3 năm c3💞❤️‍🔥" }
   ];
